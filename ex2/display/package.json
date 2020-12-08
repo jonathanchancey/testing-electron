@@ -1,7 +1,12 @@
 {
   "name": "display",
   "version": "0.1.0",
+  "description": "Click Matrix Mouse Printer",
+  "author": "jonathanchancey",
   "main": "public/electron.js",
+  "build":{
+    "appId": "display.menu"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
@@ -19,6 +24,8 @@
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "build": "npm run react-build && npm run electron-build",
+    "pack": "electron-builder --dir",
+    "electron-build": "electron-builder",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
