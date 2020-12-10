@@ -1,5 +1,9 @@
 # React - Learning
 
+## Design Details
+
+> This is a definition
+
 # Lesson 1 - Codeacademy
 
 [Learn React: JSX Cheatsheet | Codecademy](https://www.codecademy.com/learn/react-101/modules/react-101-jsx-u/cheatsheet)
@@ -283,3 +287,75 @@ const h1 = React.createElement(
   "Hello, world"
 );
 ```
+
+---
+
+## Hello World, Part II... THE COMPONENT
+
+React applications are made out of components.
+
+> A component is a small, reusable chunk of code that is responsible for one job. That job is often to render some HTML, which often involves rendering HTML.
+
+This code will create and render a new React component:
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+ 
+class MyComponentClass extends React.Component {
+  render() {
+    return <h1>Hello world</h1>;
+  }
+};
+ 
+ReactDOM.render(
+  <MyComponentClass />,
+  document.getElementById('app')
+);
+```
+
+On line 4, by subclassing `React.Component`, you create a new component class. This is not a component! A component class is more like a factory that produces components. When you start making components, each one will come from a component class.
+
+```jsx
+// creates a variable named React:
+import React from 'react';
+// creates a variable named ReactDOM:
+import ReactDOM from 'react-dom';
+// evaluates this variable and get a particular, imported JavaScript object:
+React // { imported object properties here... }
+```
+
+The methods imported from `'react-dom'` are meant for interacting with the DOM. You are already familiar with one of them: `ReactDOM.render()`.
+
+The methods imported from `'react'` don’t deal with the DOM at all. They don’t engage directly with anything that isn’t part of React.
+
+All class components will have some methods and properties in common, thus `extends`
+
+After we define our class component, we can use it to render as many instances of that component as we want.
+
+Component Class names should be in UpperCamelCase
+
+All JavaScript classes need a body.
+
+Here’s what your class body would look like on its own, without the rest of the class declaration syntax. 
+
+```jsx
+{
+  render() {
+    return <h1>Hello world</h1>;
+  }
+}
+```
+
+This is a set of instructions explaining how to build a React component. 
+
+So, let’s make a React component! It only takes one more line:
+
+```jsx
+<MyComponentClass />
+
+```
+
+To make a React component, you write a *JSX element.* Instead of naming your JSX element something like `h1` or `div` like you’ve done before, give it the same name as a *component class*. Voilà, there’s your *component instance!*
+
+JSX elements can be either HTML-like, or component instances. JSX uses capitalization to distinguish between the two! That is the React-specific reason why component class names must begin with capital letters. In a JSX element, that capitalized first letter says, “I will be a component instance and not an HTML tag.”
