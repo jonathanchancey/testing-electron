@@ -359,3 +359,200 @@ So, let’s make a React component! It only takes one more line:
 To make a React component, you write a *JSX element.* Instead of naming your JSX element something like `h1` or `div` like you’ve done before, give it the same name as a *component class*. Voilà, there’s your *component instance!*
 
 JSX elements can be either HTML-like, or component instances. JSX uses capitalization to distinguish between the two! That is the React-specific reason why component class names must begin with capital letters. In a JSX element, that capitalized first letter says, “I will be a component instance and not an HTML tag.”
+
+---
+
+# Use Multiline JSX in a Component
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class QuoteMaker extends React.Component {
+  render() {
+    return (
+      <blockquote>
+  <p>
+    What is important now is to recover our senses.
+  </p>
+  <cite>
+    <a target="_blank" 
+      href="https://en.wikipedia.org/wiki/Susan_Sontag">
+      Susan Sontag
+    </a>
+  </cite>
+</blockquote>
+      
+    );
+  }
+};
+
+ReactDOM.render(
+  <QuoteMaker />,
+  document.getElementById('app')
+);
+```
+
+The render statement can work with multiline JSX if you add parentheses to the return statement in the `QuoteMaker` class.
+
+# Use a Variable Attribute in a Component
+
+Variables can be used within JSX to access values within a object's properties. 
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const owl = {
+  title: 'Excellent Owl',
+  src: 'https://content.codecademy.com/courses/React/react_photo-owl.jpg'
+};
+
+class Owl extends React.Component {
+  render() {
+    return (
+      <div>
+      <h1>{owl.title}</h1>
+      <img src={owl.src} alt={owl.title} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Owl />,
+  document.getElementById('app')
+);
+```
+
+# Put Logic in a Render Function
+
+A `render()` function must have a `return` statement but it's also a fine place to put simple calculations that need to happen right before a component renders. Here’s an example of some calculations inside of a `render` function:
+
+```jsx
+class Random extends React.Component {
+  render() {
+    // First, some logic that must happen
+    // before rendering:
+    const n = Math.floor(Math.random() * 10 + 1);
+    // Next, a return statement
+    // using that logic:
+    return <h1>The number is {n}!</h1>;
+  }
+}
+```
+
+Make sure not to put the logic outside of the render function
+
+```jsx
+// WRONG
+class Random extends React.Component {
+  // This should be in the render function:
+  const n = Math.floor(Math.random() * 10 + 1);
+ 
+  render() {
+    return <h1>The number is {n}!</h1>;
+  }
+};
+```
+
+# Use a Conditional in a Render Function
+
+The `if` statement is located *inside* of the render function, but *before* the `return` statement. This is pretty much the only way that you will ever see an `if` statement used in a render function.
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const fiftyFifty = Math.random() < 0.5;
+
+// New component class starts here:
+class TonightsPlan extends React.Component {
+  render() {
+    let task;
+    if (!fiftyFifty) {
+      task = 'out'
+    } else {
+      task = 'to bed'
+    }
+
+    return <h1>Tonight I'm going {task} WOOO</h1>;
+  }
+}
+
+ReactDOM.render(
+	<TonightsPlan />,
+	document.getElementById('app')
+);
+```
+
+# Use this in a Component
+
+From a background like Java, PHP or other *standard* language, `[this](https://en.wikipedia.org/wiki/This_(computer_programming))` is the instance of the current object in the class method. `this` cannot be used outside the method and such a simple approach does not create confusion.
+
+In JavaScript the situation is different: `this` is the context of a function invocation (a.k.a. exection). The language has 4 function invocation types:
+
+- function invocation: `alert('Hello World!')`
+- method invocation: `console.log('Hello World!')`
+- constructor invocation: `new RegExp('\\d')`
+- indirect invocation: `alert.call(undefined, 'Hello World!')`
+
+Each invocation type defines the context in its way, so `this` behaves differently than the developer expects.
+
+[https://dmitripavlutin.com/gentle-explanation-of-this-in-javascript/](https://dmitripavlutin.com/gentle-explanation-of-this-in-javascript/)
+
+```jsx
+class IceCreamGuy extends React.Component {
+  get food() {
+    return 'ice cream';
+  }
+ 
+  render() {
+    return <h1>I like {this.food}.</h1>;
+  }
+}
+```
+
+`this` refers to an instance of `IceCreamGuy`. The less simple answer is that `this` refers to the object on which `this`‘s enclosing method, in this case `.render()`, is called. It is almost inevitable that this object will be an instance of `IceCreamGuy`, but technically it could be something else.
+
+Let’s assume that `this` refers to an instance of your component class, as will be the case in all examples in this course. `IceCreamGuy` has two methods: `.food` and `.render()`. Since `this` will evaluate to an instance of `IceCreamGuy`, `this.food` will evaluate to a call of `IceCreamGuy`‘s `.food` method. This method will, in turn, evaluate to the string “ice cream.”
+
+Why don’t you need parentheses after `this.food`? Shouldn’t it be `this.food()`?
+
+You don’t need those parentheses because `.food` is a *getter* method. You can tell this from the `get` in the above class declaration body.
+
+There’s nothing React-specific about getter methods, nor about `this` behaving in this way! However, in React you will see `this` used in this way almost constantly.
+
+# Use an Event Listener in a Component
+
+Render functions often contain event listeners. Here’s an example of an event listener in a render function:
+
+```jsx
+render() {
+  return (
+    <div onHover={myFunc}>
+    </div>
+  );
+}
+```
+
+[https://reactjs.org/docs/handling-events.html](https://reactjs.org/docs/handling-events.html)
+
+> An event **handler** is a function that gets called in response to an event.
+
+In React, you define event handlers as methods on a component class. Like this:
+
+```jsx
+class MyClass extends React.Component {
+  myFunc() {
+    alert('Stop it.  Stop hovering.');
+  }
+ 
+  render() {
+    return (
+      <div onHover={this.myFunc}>
+      </div>
+    );
+  }
+}
+```
