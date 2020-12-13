@@ -1,10 +1,6 @@
 # React - Learning
 
-## Design Details
-
-> This is a definition
-
-# Lesson 1 - Codeacademy
+# Introduction to JSX
 
 [Learn React: JSX Cheatsheet | Codecademy](https://www.codecademy.com/learn/react-101/modules/react-101-jsx-u/cheatsheet)
 
@@ -395,7 +391,7 @@ ReactDOM.render(
 
 The render statement can work with multiline JSX if you add parentheses to the return statement in the `QuoteMaker` class.
 
-# Use a Variable Attribute in a Component
+## Use a Variable Attribute in a Component
 
 Variables can be used within JSX to access values within a object's properties. 
 
@@ -425,7 +421,7 @@ ReactDOM.render(
 );
 ```
 
-# Put Logic in a Render Function
+## Put Logic in a Render Function
 
 A `render()` function must have a `return` statement but it's also a fine place to put simple calculations that need to happen right before a component renders. Here’s an example of some calculations inside of a `render` function:
 
@@ -456,7 +452,7 @@ class Random extends React.Component {
 };
 ```
 
-# Use a Conditional in a Render Function
+## Use a Conditional in a Render Function
 
 The `if` statement is located *inside* of the render function, but *before* the `return` statement. This is pretty much the only way that you will ever see an `if` statement used in a render function.
 
@@ -486,7 +482,7 @@ ReactDOM.render(
 );
 ```
 
-# Use this in a Component
+## Use `this` in a Component
 
 From a background like Java, PHP or other *standard* language, `[this](https://en.wikipedia.org/wiki/This_(computer_programming))` is the instance of the current object in the class method. `this` cannot be used outside the method and such a simple approach does not create confusion.
 
@@ -523,7 +519,7 @@ You don’t need those parentheses because `.food` is a *getter* method. You
 
 There’s nothing React-specific about getter methods, nor about `this` behaving in this way! However, in React you will see `this` used in this way almost constantly.
 
-# Use an Event Listener in a Component
+## Use an Event Listener in a Component
 
 Render functions often contain event listeners. Here’s an example of an event listener in a render function:
 
@@ -554,5 +550,165 @@ class MyClass extends React.Component {
       </div>
     );
   }
+}
+```
+
+---
+
+# Components Interact
+
+A React application can contain dozens, or even hundreds, of components.
+
+Each component might be small and relatively unremarkable on its own. When combined, however, they can form enormous, fantastically complex ecosystems of information.
+
+In other words, React apps are made out of components, but what makes React special isn’t components themselves. What makes React special is the ways in which components *interact*.
+
+Render methods can also return another kind of JSX: component instances.
+
+```jsx
+class OMG extends React.Component {
+  render() {
+    return <h1>Whooaa!</h1>;
+  }
+}
+ 
+class Crazy extends React.Component {
+  render() {
+    return <OMG />;
+  }
+}
+```
+
+## Require A File
+
+If you want to use a variable that’s declared in a different file, such as `NavBar`, then you have to *import* the variable that you want. To import a variable, you can use an `import` statement:
+
+```jsx
+import { NavBar } from './NavBar.js';
+```
+
+Notice the differences between the above line of code and this familiar line:
+
+```jsx
+import React from 'react';
+```
+
+The second important difference involves the contents of the string at the end of the statement: `'react'` vs `'./NavBar.js'`.
+
+If you use an `import` statement, and the string at the end begins with either a dot or a slash, then `import` will treat that string as a *filepath*. `import` will follow that filepath, and import the file that it finds.
+
+If your filepath doesn’t have a file extension, then “.js” is assumed. So the above example could be shortened:
+
+```jsx
+import { NavBar } from './NavBar';
+```
+
+## export
+
+`export` comes from [ES6’s module system,](http://exploringjs.com/es6/ch_modules.html) just like `import` does. `export` and `import` are meant to be used together, and you rarely see one without the other.
+
+There are a few different ways to use `export`.
+
+Place the keyword `export` immediately before something that you want to export. That something can be any top-level `var`, `let`, `const`, `function`, or `class`. You can also export multiple things from the same file.
+
+```jsx
+// Manifestos.js:
+ 
+export const faveManifestos = {
+  futurist: 'http://www.artype.de/Sammlung/pdf/russolo_noise.pdf',
+  agile: 'https://agilemanifesto.org/iso/en/manifesto.html',
+  cyborg:   'http://faculty.georgetown.edu/irvinem/theory/Haraway-CyborgManifesto-1.pdf'
+};
+
+export const alsoRan = 'TimeCube';
+```
+
+In a different file, `import` the name of the `var`, `let`, `const`, `function`, or `class` from the first file:
+
+```jsx
+// App.js:
+ 
+// Import faveManifestos and alsoRan from ./Manifestos.js:
+import { faveManifestos, alsoRan } from './Manifestos';
+ 
+// Use faveManifestos:
+console.log(`A Cyborg Manifesto:  ${faveManifestos.cyborg}`); 
+```
+
+This style of importing and exporting in JavaScript is known as “named exports.” When you use named exports, you always need to wrap your imported names in curly braces, such as:
+
+## Component Rendering In Action
+
+```jsx
+// ProfilePage.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { NavBar } from './NavBar.js';
+
+class ProfilePage extends React.Component {
+  render() {
+    return (
+      <div>
+      <NavBar />
+        <h1>All About Me!</h1>
+        <p>I like movies and blah blah blah blah blah</p>
+        <img src="https://content.codecademy.com/courses/React/react_photo-monkeyselfie.jpg" />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<ProfilePage />, document.getElementById('app'))
+```
+
+```jsx
+// NavBar.js
+
+import React from 'react';
+
+export class NavBar extends React.Component {
+  render() {
+    const pages = ['home', 'blog', 'pics', 'bio', 'art', 'shop', 'about', 'contact'];
+    const navLinks = pages.map(page => {
+      return (
+        <a href={'/' + page}>
+          {page}
+        </a>
+      )
+    });
+
+    return <nav>{navLinks}</nav>;
+  }
+}
+```
+
+### Result
+
+![React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled%201.png](React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled%201.png)
+
+# Introduction to `this.props`
+
+A component can pass information to another component.
+
+Information that gets passed from one component to another is known as “props.”
+
+## Access a Component's props
+
+Every component has something called `props`.
+
+A component’s `props` is an object. It holds information about that component.
+
+To see a component’s `props` object, you use the expression `this.props`. Here’s an example of `this.props` being used inside of a render method:
+
+```jsx
+render() {
+  console.log("Props object comin' up!");
+ 
+  console.log(this.props);
+ 
+  console.log("That was my props object!");
+ 
+  return <h1>Hello world</h1>;
 }
 ```
