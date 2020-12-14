@@ -712,3 +712,11 @@ render() {
   return <h1>Hello world</h1>;
 }
 ```
+
+---
+
+# useState supplementary material 
+
+[https://www.youtube.com/watch?v=O6P86uwfdR0](https://www.youtube.com/watch?v=O6P86uwfdR0)
+
+---
