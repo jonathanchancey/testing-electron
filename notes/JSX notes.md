@@ -247,7 +247,7 @@ const peopleLis = people.map(person =>
 ReactDOM.render(<ul>{peopleLis}</ul>,document.getElementById('app'))
 ```
 
-![React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled.png](React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled.png)
+![React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled.png](Untitled.png)
 
 ## Keys
 
@@ -685,7 +685,7 @@ export class NavBar extends React.Component {
 
 ### Result
 
-![React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled%201.png](React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled%201.png)
+![React%20-%20Learning%20139d92ba5e654481bc4e90686bfbe342/Untitled%201.png](Untitled%201.png)
 
 # Introduction to `this.props`
 
@@ -711,6 +711,31 @@ render() {
  
   return <h1>Hello world</h1>;
 }
+```
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class PropsDisplayer extends React.Component {
+  render() {
+  	const stringProps = JSON.stringify(this.props);
+
+    return (
+      <div>
+        <h1>CHECK OUT MY PROPS OBJECT</h1>
+        <h2>{stringProps}</h2>
+      </div>
+    );
+  }
+}
+
+// ReactDOM.render goes here:
+ReactDOM.render(
+	<PropsDisplayer />,
+	document.getElementById('app')
+);
+
 ```
 
 ---
